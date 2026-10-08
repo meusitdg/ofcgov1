@@ -1,0 +1,30 @@
+COMO FAZER O PAGAMENTO FUNCIONAR (igual ao aquigas)
+===================================================
+
+O pagamento PIX funciona em DUAS partes:
+
+1) O SITE (este repositório, no GitHub Pages)
+   - A página chat/chat/index.html já está atualizada para chamar
+     o backend no Netlify.
+
+2) O BACKEND (Netlify) - é ele que fala com a Cakto
+   Passos:
+   a. Crie uma conta grátis em https://netlify.com (pode entrar com GitHub)
+   b. "Add new site" > "Import an existing project" > escolha o repositório dtr
+   c. O Netlify vai ler o arquivo netlify.toml automaticamente
+   d. Em Site settings > Environment variables, cadastre:
+      CAKTO_CLIENT_ID     = EJblaTEWpZivLpygsT4p7EtTyPSoErY1VgOHEkys
+      CAKTO_CLIENT_SECRET = Iszt53jZZlKnpGfFEdrdrqvWaIZL2JsHKWbMPhzV4V62RtFdGnkHoefjtJobFtbpxiXRbPYw2k24dmjj162GGLz0tOapgGYGCy7iBUJSCHAeqfsbT0TBUdjblHPy0BPI
+      CAKTO_OFFER_ID      = 8kbynaf_1180687
+   e. Faça o deploy. O Netlify vai te dar um endereço tipo
+      https://NOME-DO-SEU-SITE.netlify.app
+   f. Abra chat/chat/index.html e troque o valor de PAYMENT_API_BASE
+      (perto da linha 313) para:
+      'https://NOME-DO-SEU-SITE.netlify.app/api/vizzionpay'
+
+OBS: enquanto você não criar seu próprio site no Netlify, a página está
+apontando para o backend do aquigas (deluxe-lily-5a4e4f.netlify.app).
+Ele funciona, mas o dinheiro cai na conta Cakto configurada LÁ.
+Crie o seu e troque o endereço.
+
+A pasta "pix" com PHP foi removida - não é mais necessária.

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API de pagamentos — Gás do Povo</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 48px auto; padding: 0 16px; color: #222; line-height: 1.6; }
+    code { background: #f1f1f1; padding: 2px 6px; border-radius: 4px; }
+    a { color: #1351b4; }
+  </style>
+</head>
+<body>
+  <h1>API de pagamentos — Gás do Povo</h1>
+  <p>Este é o backend da Cakto (PIX). O site em si fica no GitHub Pages.</p>
+  <ul>
+    <li><code>POST /api/vizzionpay/pix</code> — gera a cobrança PIX</li>
+    <li><code>GET /api/vizzionpay/status?identifier=</code> — confirma o pagamento</li>
+    <li><code>GET /api/vizzionpay/fees</code> — taxas cobradas do comprador</li>
+    <li><code>POST /api/vizzionpay/callback</code> — notificação do gateway</li>
+  </ul>
+  <p>Status: <a href="/api/vizzionpay/fees">/api/vizzionpay/fees</a></p>
+</body>
+</html>

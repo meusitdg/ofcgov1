@@ -1,0 +1,33 @@
+# Deploy do backend de pagamentos na Netlify (o site fica no GitHub Pages).
+# Conecte este repositório na Netlify e configure as variáveis de ambiente:
+#   CAKTO_CLIENT_ID, CAKTO_CLIENT_SECRET, CAKTO_OFFER_ID, CAKTO_OFFERS
+#   (opcionais: CAKTO_PIX_EXPIRES_IN, VIZZIONPAY_PUBLIC_KEY, VIZZIONPAY_SECRET_KEY)
+
+[build]
+  publish = "netlify/public"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = []
+
+# O frontend chama estes caminhos (mesmos da Vercel/server local)
+[[redirects]]
+  from = "/api/vizzionpay/pix"
+  to = "/.netlify/functions/pix"
+  status = 200
+
+[[redirects]]
+  from = "/api/vizzionpay/status"
+  to = "/.netlify/functions/status"
+  status = 200
+
+[[redirects]]
+  from = "/api/vizzionpay/fees"
+  to = "/.netlify/functions/fees"
+  status = 200
+
+[[redirects]]
+  from = "/api/vizzionpay/callback"
+  to = "/.netlify/functions/callback"
+  status = 200
